@@ -1,22 +1,32 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AlertComponent } from './_components';
 import { HomeComponent } from './home/home.component';
-import { AuthGuard } from './_helpers';
-import { Role } from './_models';
 
-const accountModule = () =>
-  import('./account/account.module').then(x => x.AccountModule);
+import { JwtInterceptor, ErrorInterceptor, fakeBackendProvider } from './_helpers';
 
-const adminModule = () =>
-  import('./admin/admin.module').then(x => x.AdminModule);
-
-const profileModule = () =>
-  import('./profile/profile.module').then(x => x.ProfileModule);
-
-export const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'account', loadChildren: accountModule },
-  { path: 'profile', loadChildren: profileModule, canActivate: [AuthGuard] },
-  { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
-  { path: '**', redirectTo: '' }
-];
+@NgModule({
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        AppRoutingModule
+    ],
+    declarations: [
+        AppComponent,
+        AlertComponent,
+        HomeComponent
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        fakeBackendProvider
+    ],
+    bootstrap: [AppComponent]
+})
+export class AppModule { }

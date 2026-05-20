@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { AccountService } from './_services';
 import { Account, Role } from './_models';
+import { AlertComponent } from './_components';
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterModule, AlertComponent]
 })
 export class AppComponent {
     Role = Role;
