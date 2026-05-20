@@ -29,6 +29,6 @@ export const appConfig: ApplicationConfig = {
       multi: true
     },
 
-    ...(environment.production ? [] : [fakeBackendProvider])
+    ...[fakeBackendProvider]
   ]
 };
