@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+import { AlertComponent } from './_components/alert.component';
 import { AccountService } from './_services';
 import { Account, Role } from './_models';
-import { AlertComponent } from './_components';
 
 @Component({
     selector: 'app-root',
